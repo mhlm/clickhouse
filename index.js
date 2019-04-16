@@ -611,7 +611,9 @@ class ClickHouse {
 					reqParams['formData'] = formData;
 				}
 			} else if (query.match(/^insert/i)) {
-				reqParams['url']  = me.url + '?query=' + encodeURIComponent(query + ' FORMAT TabSeparated') + '&' + querystring.stringify(configQS);
+				var formatQuery = ''
+				if (!query.match(/ format /i)) formatQuery = ' FORMAT TabSeparated'
+				reqParams['url']  = me.url + '?query=' + encodeURIComponent(query + formatQuery) + '&' + querystring.stringify(configQS);
 				
 				if (me.opts.username) {
 					reqParams['url'] = reqParams['url'] + '&user=' + me.opts.username;
